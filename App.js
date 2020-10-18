@@ -16,6 +16,7 @@ import {
   View,
   Text,
   StatusBar,
+  FlatList
 } from 'react-native';
 
 import {
@@ -35,32 +36,45 @@ const images={
 };
 const items=[
   {
+    id:"1",
     name:"Pizza",
-    image:require("./assets/images/pizza.png")
+    image:require("./assets/images/pizza.png"),
+    items:25
   },
   {
+    id:"2",
     name:"Salad",
-    image:require("./assets/images/salads.png")
+    image:require("./assets/images/salads.png"),
+    items:30
   },
   {
+    id:"3",
     name:"Desserts",
-    image:require("./assets/images/dessert.png")
+    image:require("./assets/images/dessert.png"),
+    items:30
   },
   {
+    id:"4",
     name:"Pasta",
-    image:require("./assets/images/pasta.png")
+    image:require("./assets/images/pasta.png"),
+    items:44
+
   },
   {
+    id:"5",
     name:"Breverages",
-    image:require("./assets/images/breverages.png")
+    image:require("./assets/images/breverages.png"),
+    items:30
+
   }
 ];
-var itemsTodisplay=[];
 
 
 
 const App: () => React$Node = () => {
   return (
+
+    
    <View style={styles.body}>
       <ImageBackground source={images.menuBackground} style={styles.menuBackground}>
       <TouchableOpacity>
@@ -71,10 +85,26 @@ const App: () => React$Node = () => {
       <ImageBackground source={images.cartIcon} style={styles.cartIcon}>
       </ImageBackground>
       </TouchableOpacity>
-      <ImageBackground source={items[0].image} style={styles.itemImage}>
+      </ImageBackground>
+      <View>
+      <FlatList style={styles.flatList}
+       contentContainerStyle={{ paddingBottom: 80}}
+        data={items}
+        renderItem={({ item }) => (
+        <View style={styles.listView}>
+            <ImageBackground source={item.image} style={styles.itemImage}>
+        <Text style={styles.itemTitle}>{item.name}</Text>
+        <Text style={styles.itemContent}>{item.items} Items</Text>  
+      </ImageBackground>
+        </View>
+        )}
+        keyExtractor={item => item.id}
+      />
+      </View>
+      
+      {/* <ImageBackground source={items[0].image} style={styles.itemImage}>
         <Text style={styles.itemTitle}>Pizza</Text>
-        <Text style={styles.itemContent}>25 Items</Text>
-
+        <Text style={styles.itemContent}>25 Items</Text>  
       </ImageBackground>
       <ImageBackground source={items[1].image} style={styles.itemImage}>
       <Text style={styles.itemTitle}>Salads</Text>
@@ -91,8 +121,8 @@ const App: () => React$Node = () => {
       <ImageBackground source={items[4].image} style={styles.itemImage}>
       <Text style={styles.itemTitle}>Breverages</Text>
         <Text style={styles.itemContent}>30 Items</Text>
-      </ImageBackground>
-      </ImageBackground>
+      </ImageBackground> */}
+     
       
    </View>
      
@@ -106,7 +136,8 @@ const styles = StyleSheet.create({
   },
   menuBackground:{
     width:"60%",
-    height:"100%"
+    height:"100%",
+    zIndex:1
     
   },
   menuIcon:{
@@ -132,7 +163,7 @@ const styles = StyleSheet.create({
   itemTitle:{
     fontFamily:"PaytoneOne-Regular",
     fontSize:25,
-    width:250,
+    width:350,
     color:"#313B52",
     paddingLeft:"30%",
     marginLeft:"145%",
@@ -149,6 +180,16 @@ const styles = StyleSheet.create({
     paddingLeft:"30%",
     marginLeft:"145%",
  
+  },
+  flatList:{
+    width:"120%",
+    zIndex:2,
+    top:30,
+    marginTop:-700,
+    marginLeft:-30,
+  },
+  listView:{
+    height:100
   }
 });
 
